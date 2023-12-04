@@ -7,7 +7,7 @@ const app = express();
 
 app.use(express.json());
 app.use("/cocktails", cocktailsRouter);
-app.use("/ingredient", ingredientsRouter);
+app.use("/ingredients", ingredientsRouter);
 app.use("/products", productsRouter);
 
 module.exports = app;

@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const request = require("supertest");
-const { Cocktails } = require("../src/models");
-const app = require("../src/app");
+const { Cocktails } = require("../../src/models");
+const app = require("../../src/app");
 const {
   Sequelize,
   ValidationErrorItem,

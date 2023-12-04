@@ -5,20 +5,23 @@ const {
   getAllItems,
   updateItemById,
   deleteItemById,
+  getItemById,
 } = require("./helpers");
 
 exports.createCocktail = (req, res) => createItem(res, "cocktails", req.body);
 
 exports.getAllCocktails = (_, res) => getAllItems(res, "cocktails");
 
-exports.getCocktailById = async (req, res) => {
-  const { id } = req.params;
-  const selectedCocktail = await Cocktails.findByPk(id, {
-    include: { model: Ingredients, where: { CocktailId: req.params.id } },
-  });
+exports.getCocktailById = (req, res) =>
+  getItemById(res, "cocktails", req.params.id);
 
-  res.status(201).json(selectedCocktail);
-};
+// exports.getCocktailById = async (req, res) => {
+//   const selectedCocktail = await Cocktails.findByPk(req.params.id, {
+//     include: { model: Ingredients, where: { CocktailId: req.params.id } },
+//   });
+
+//   res.status(200).json(selectedCocktail);
+// };
 
 exports.updateCocktailById = (req, res) =>
   updateItemById(res, "cocktails", req.body, req.params.id);
