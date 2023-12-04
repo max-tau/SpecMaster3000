@@ -1,8 +1,10 @@
-const Cocktails = require("../models");
+const { Cocktails, Ingredients, Products } = require("../models");
 
 const getModel = (model) => {
   const models = {
     cocktails: Cocktails,
+    ingredients: Ingredients,
+    products: Products,
   };
 
   return models[model];
