@@ -1,0 +1,24 @@
+.navbar {
+  background-color: blueviolet;
+  color: aliceblue;
+  padding: 10px;
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 2px solid goldenrod;
+}
+
+.navbar-links {
+  background-color: darkblue;
+  color: aliceblue;
+  text-decoration: none;
+  padding: 10px;
+  margin-left: 10px;
+  border: 1px solid aliceblue;
+  border-radius: 5px;
+}
+
+.navbar-links:active {
+  background-color: aquamarine;
+  color: black;
+  border: 2px inset darkgray;
+}
