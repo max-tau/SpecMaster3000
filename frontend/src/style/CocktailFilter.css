@@ -1,0 +1,43 @@
+.search-result_list {
+  background-color: aliceblue;
+  color: navy;
+  list-style: none;
+  border: 0.25rem transparent;
+  border-radius: 0.5rem;
+  margin-top: none;
+}
+
+.accordion-item {
+  border: 0.1rem solid aliceblue;
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+  margin: 1.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+.accordion-title {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+  cursor: pointer;
+}
+
+.accordion-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.accordion-content input {
+  margin-right: 0.5rem;
+}
+
+.cocktail-checkbox {
+  padding: 0.2rem;
+}
+
+.accordion-content button {
+  align-self: center;
+  margin-top: 0.5rem;
+}

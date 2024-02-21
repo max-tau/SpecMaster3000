@@ -1,5 +1,7 @@
 .section-tile {
+  color: aliceblue;
+  background-color: grey;
   padding: 1rem;
-  border: 0.2rem solid blueviolet;
+  border: 0.2rem solid goldenrod;
   border-radius: 1rem;
 }

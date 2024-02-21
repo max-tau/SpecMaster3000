@@ -1,0 +1,11 @@
+.revision-page {
+  color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.revision-favourites_tiles {
+  display: flex;
+  gap: 1rem;
+}
