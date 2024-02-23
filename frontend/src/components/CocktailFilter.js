@@ -10,6 +10,7 @@ const CocktailFilter = () => {
   const [classicAccordionActive, setClassicAccordionActive] = useState(false);
   const [searchState, setSearchState] = useState({ query: "", list: [] });
   const [selectedCocktails, setSelectedCocktails] = useState([]);
+  const [checkboxCocktails, setCheckboxCocktails] = useState([]);
   /* Add a group use state for cocktails, axios.get for all cocktails then filter to get others. results should be all cocktails in search input */
 
   const handleSearchChange = (e) => {
@@ -23,7 +24,31 @@ const CocktailFilter = () => {
   };
 
   const handleAddCocktail = (e) => {
-    setSelectedCocktails([...selectedCocktails, e]);
+    if (selectedCocktails.includes(e)) {
+      console.log("Cocktail is already on the list");
+    } else {
+      setSelectedCocktails([...selectedCocktails, e]);
+    }
+  };
+
+  const handleAddCheckboxCocktails = () => {
+    const nonDuplicateCheckboxCocktails = checkboxCocktails.filter(
+      (checkboxCocktail) => !selectedCocktails.includes(checkboxCocktail)
+    );
+    setSelectedCocktails(
+      [...selectedCocktails, nonDuplicateCheckboxCocktails].flat()
+    );
+  };
+
+  const onChange = (e) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setCheckboxCocktails([...checkboxCocktails, e.target.value]);
+    } else {
+      const index = checkboxCocktails.indexOf(e.target.value);
+      checkboxCocktails.splice(index, 1);
+      setCheckboxCocktails(checkboxCocktails);
+    }
   };
 
   // useEffect(() => {
@@ -110,12 +135,17 @@ const CocktailFilter = () => {
                     type="checkbox"
                     id="houseCocktail"
                     name="houseCocktail"
+                    onChange={onChange}
                     value={houseCocktail.cocktailName}
                   />
                   {houseCocktail.cocktailName}
                 </div>
               ))}
-              <button className="accordion-content_button" type="submit">
+              <button
+                className="accordion-content_button"
+                type="button"
+                onClick={handleAddCheckboxCocktails}
+              >
                 Add
               </button>
             </form>
