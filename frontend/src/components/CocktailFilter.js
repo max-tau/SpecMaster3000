@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../style/CocktailFilter.css";
+import { MdOutlineRemoveCircleOutline } from "react-icons/md";
 
-const CocktailFilter = () => {
+const CocktailFilter = ({ selectedCocktails, onSetSelectedCocktails }) => {
   axios.defaults.baseURL = "http://localhost:3001";
 
   const [houseCocktails, setHouseCocktails] = useState([]);
   const [houseAccordionActive, setHouseAccordionActive] = useState(false);
   const [classicAccordionActive, setClassicAccordionActive] = useState(false);
   const [searchState, setSearchState] = useState({ query: "", list: [] });
-  const [selectedCocktails, setSelectedCocktails] = useState([]);
   const [checkboxCocktails, setCheckboxCocktails] = useState([]);
   /* Add a group use state for cocktails, axios.get for all cocktails then filter to get others. results should be all cocktails in search input */
 
@@ -27,7 +27,8 @@ const CocktailFilter = () => {
     if (selectedCocktails.includes(e)) {
       console.log("Cocktail is already on the list");
     } else {
-      setSelectedCocktails([...selectedCocktails, e]);
+      onSetSelectedCocktails([...selectedCocktails, e]);
+      setSearchState({ query: "", list: [] });
     }
   };
 
@@ -35,7 +36,7 @@ const CocktailFilter = () => {
     const nonDuplicateCheckboxCocktails = checkboxCocktails.filter(
       (checkboxCocktail) => !selectedCocktails.includes(checkboxCocktail)
     );
-    setSelectedCocktails(
+    onSetSelectedCocktails(
       [...selectedCocktails, nonDuplicateCheckboxCocktails].flat()
     );
   };
@@ -49,6 +50,14 @@ const CocktailFilter = () => {
       checkboxCocktails.splice(index, 1);
       setCheckboxCocktails(checkboxCocktails);
     }
+  };
+
+  const removeSelected = (cocktailToRemove) => {
+    onSetSelectedCocktails(
+      selectedCocktails.filter(
+        (selectedCocktail) => selectedCocktail !== cocktailToRemove
+      )
+    );
   };
 
   // useEffect(() => {
@@ -107,6 +116,7 @@ const CocktailFilter = () => {
                 return (
                   <li key={houseCocktail.index}>
                     <button
+                      className="search-result_list_item"
                       value={houseCocktail.cocktailName}
                       onClick={(e) => handleAddCocktail(e.target.value)}
                       type="button"
@@ -170,13 +180,17 @@ const CocktailFilter = () => {
                       type="checkbox"
                       id="classicCocktail"
                       name="classicCocktail"
-                      value={houseCocktail}
-                      onClick={() => this.props.onClick(handleAddCocktail())}
+                      value={houseCocktail.cocktailName}
+                      onChange={onChange}
                     />
                     {houseCocktail.cocktailName}
                   </div>
                 ))}
-                <button className="accordion-content_button" type="submit">
+                <button
+                  className="accordion-content_button"
+                  type="button"
+                  onClick={handleAddCheckboxCocktails}
+                >
                   Add
                 </button>
               </form>
@@ -184,14 +198,21 @@ const CocktailFilter = () => {
           )}
         </div>
       </div>
-      <h3>Current selection</h3>
-      <div className="selected-cocktails">
-        <ul>
-          {selectedCocktails.map((selectedCocktail) => (
-            <li>{selectedCocktail}</li>
-          ))}
-        </ul>
-      </div>
+      {selectedCocktails.length > 0 ? (
+        <div className="selected-cocktails">
+          <h3>Current selection</h3>
+          <ul className="selected-cocktails_list">
+            {selectedCocktails.map((selectedCocktail) => (
+              <div className="selected-cocktails_list_item">
+                <li>{selectedCocktail} &nbsp;</li>
+                <MdOutlineRemoveCircleOutline
+                  onClick={() => removeSelected(selectedCocktail)}
+                />
+              </div>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </div>
   );
 };

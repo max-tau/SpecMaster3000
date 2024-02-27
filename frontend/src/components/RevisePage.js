@@ -3,7 +3,7 @@ import SectionTile from "./SectionTile";
 import "../style/RevisePage.css";
 import CocktailFilter from "./CocktailFilter";
 
-const RevisePage = () => {
+const RevisePage = ({ selectedCocktails, onSetSelectedCocktails }) => {
   return (
     <div className="revision-page">
       <h2 className="revision-favourites_title">
@@ -51,7 +51,10 @@ const RevisePage = () => {
           }
         />
       </div>
-      <CocktailFilter />
+      <CocktailFilter
+        selectedCocktails={selectedCocktails}
+        onSetSelectedCocktails={onSetSelectedCocktails}
+      />
     </div>
   );
 };

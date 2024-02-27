@@ -1,3 +1,6 @@
+/* .cocktail-search {
+} */
+
 .search-result_list {
   background-color: aliceblue;
   color: navy;
@@ -5,6 +8,19 @@
   border: 0.25rem transparent;
   border-radius: 0.5rem;
   margin-top: none;
+}
+
+.search-result_list_item {
+  border: none;
+  background-color: aliceblue;
+}
+
+.search-result_list_item:hover {
+  font-weight: bold;
+}
+
+.search-result_list_item:active {
+  font-size: small;
 }
 
 .accordion-item {
@@ -40,4 +56,28 @@
 .accordion-content button {
   align-self: center;
   margin-top: 0.5rem;
+}
+
+.selected-cocktails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0.1rem solid aliceblue;
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+  margin: 1.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+.selected-cocktails_list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.selected-cocktails_list_item {
+  display: flex;
+}
+
+.selected-cocktails_list_item li {
+  padding-bottom: 0.1rem;
 }
