@@ -10,7 +10,7 @@ import ReviseAndTestModule from "./ReviseAndTestModule";
 
 function App() {
   // const [loggedInUser, setLoggedInUser] = useState()
-  const [selectedCocktails, setSelectedCocktails] = useState([]);
+  const [revisionCocktails, setRevisionCocktails] = useState([]);
   return (
     <div className="App">
       <NavBar />
@@ -22,12 +22,17 @@ function App() {
           path="revise"
           element={
             <RevisePage
-              selectedCocktails={selectedCocktails}
-              onSetSelectedCocktails={setSelectedCocktails}
+              onSetSelectedCocktails={setRevisionCocktails}
+              revisionCocktails={revisionCocktails}
             />
           }
         />
-        <Route path="revision-time" element={<ReviseAndTestModule />} />
+        <Route
+          path="revision-time"
+          element={
+            <ReviseAndTestModule selectedCocktails={revisionCocktails} />
+          }
+        />
       </Routes>
     </div>
   );

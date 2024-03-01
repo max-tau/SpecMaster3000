@@ -2,8 +2,9 @@ import React from "react";
 import SectionTile from "./SectionTile";
 import "../style/RevisePage.css";
 import CocktailFilter from "./CocktailFilter";
+import { Link } from "react-router-dom";
 
-const RevisePage = ({ selectedCocktails, onSetSelectedCocktails }) => {
+const RevisePage = ({ onSetSelectedCocktails, revisionCocktails }) => {
   return (
     <div className="revision-page">
       <h2 className="revision-favourites_title">
@@ -52,9 +53,10 @@ const RevisePage = ({ selectedCocktails, onSetSelectedCocktails }) => {
         />
       </div>
       <CocktailFilter
-        selectedCocktails={selectedCocktails}
         onSetSelectedCocktails={onSetSelectedCocktails}
+        revisionCocktails={revisionCocktails}
       />
+      <Link to="../revision-time">Go to revise</Link>
     </div>
   );
 };

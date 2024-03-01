@@ -3,7 +3,7 @@ import axios from "axios";
 import "../style/CocktailFilter.css";
 import { MdOutlineRemoveCircleOutline } from "react-icons/md";
 
-const CocktailFilter = ({ selectedCocktails, onSetSelectedCocktails }) => {
+const CocktailFilter = ({ onSetSelectedCocktails, revisionCocktails }) => {
   axios.defaults.baseURL = "http://localhost:3001";
 
   const [houseCocktails, setHouseCocktails] = useState([]);
@@ -11,6 +11,7 @@ const CocktailFilter = ({ selectedCocktails, onSetSelectedCocktails }) => {
   const [classicAccordionActive, setClassicAccordionActive] = useState(false);
   const [searchState, setSearchState] = useState({ query: "", list: [] });
   const [checkboxCocktails, setCheckboxCocktails] = useState([]);
+  const [cocktailSelection, setCocktailSelection] = useState([]);
   /* Add a group use state for cocktails, axios.get for all cocktails then filter to get others. results should be all cocktails in search input */
 
   const handleSearchChange = (e) => {
@@ -24,20 +25,20 @@ const CocktailFilter = ({ selectedCocktails, onSetSelectedCocktails }) => {
   };
 
   const handleAddCocktail = (e) => {
-    if (selectedCocktails.includes(e)) {
+    if (cocktailSelection.includes(e)) {
       console.log("Cocktail is already on the list");
     } else {
-      onSetSelectedCocktails([...selectedCocktails, e]);
+      setCocktailSelection([...cocktailSelection, e]);
       setSearchState({ query: "", list: [] });
     }
   };
 
   const handleAddCheckboxCocktails = () => {
     const nonDuplicateCheckboxCocktails = checkboxCocktails.filter(
-      (checkboxCocktail) => !selectedCocktails.includes(checkboxCocktail)
+      (checkboxCocktail) => !cocktailSelection.includes(checkboxCocktail)
     );
-    onSetSelectedCocktails(
-      [...selectedCocktails, nonDuplicateCheckboxCocktails].flat()
+    setCocktailSelection(
+      [...cocktailSelection, nonDuplicateCheckboxCocktails].flat()
     );
   };
 
@@ -53,11 +54,17 @@ const CocktailFilter = ({ selectedCocktails, onSetSelectedCocktails }) => {
   };
 
   const removeSelected = (cocktailToRemove) => {
-    onSetSelectedCocktails(
-      selectedCocktails.filter(
+    setCocktailSelection(
+      cocktailSelection.filter(
         (selectedCocktail) => selectedCocktail !== cocktailToRemove
       )
     );
+  };
+
+  const confirmSelection = (e) => {
+    e.preventDefault();
+    onSetSelectedCocktails(cocktailSelection);
+    console.log(revisionCocktails);
   };
 
   // useEffect(() => {
@@ -198,11 +205,11 @@ const CocktailFilter = ({ selectedCocktails, onSetSelectedCocktails }) => {
           )}
         </div>
       </div>
-      {selectedCocktails.length > 0 ? (
+      {cocktailSelection.length > 0 ? (
         <div className="selected-cocktails">
           <h3>Current selection</h3>
           <ul className="selected-cocktails_list">
-            {selectedCocktails.map((selectedCocktail) => (
+            {cocktailSelection.map((selectedCocktail) => (
               <div className="selected-cocktails_list_item">
                 <li>{selectedCocktail} &nbsp;</li>
                 <MdOutlineRemoveCircleOutline
@@ -213,6 +220,9 @@ const CocktailFilter = ({ selectedCocktails, onSetSelectedCocktails }) => {
           </ul>
         </div>
       ) : null}
+      <button type="submit" onClick={confirmSelection}>
+        Confirm selection
+      </button>
     </div>
   );
 };

@@ -25,21 +25,45 @@
   padding: 1.5rem;
 }
 
-.cocktail-card_form select,
-input[type="text"] {
+.input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  column-gap: 1rem;
+}
+
+.ingredient-input {
+  margin: 1rem, 1rem, 1rem, 1rem;
+}
+
+.ingredient-input_button {
+  margin: 0.5rem 0 1rem 0;
+}
+
+.cocktail-card_form_dropdown {
   width: 100%;
   box-sizing: border-box;
 }
 
 .cocktail-card_form_label {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .cocktail-card_form_input {
   margin-bottom: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .cocktail-card_form_dropdown {
   margin-bottom: 1rem;
   padding: 0.1rem 0 0.1rem 0;
+}
+
+.skip-card_button {
+  margin-left: 28rem;
+  color: aliceblue;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
