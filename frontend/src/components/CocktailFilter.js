@@ -113,6 +113,7 @@ const CocktailFilter = ({ onSetSelectedCocktails, revisionCocktails }) => {
           type="search"
           placeholder="Search by cocktail name"
           className="cocktail-search"
+          id="cocktail-search"
           onChange={handleSearchChange}
           value={searchState.query}
         />
@@ -147,10 +148,10 @@ const CocktailFilter = ({ onSetSelectedCocktails, revisionCocktails }) => {
           {houseAccordionActive && (
             <form className="accordion-content">
               {houseCocktails.map((houseCocktail) => (
-                <div className="cocktail-checkbox">
+                <div className="cocktail-checkbox" key={houseCocktail.index}>
                   <input
                     type="checkbox"
-                    id="houseCocktail"
+                    id={houseCocktail.cocktailName}
                     name="houseCocktail"
                     onChange={onChange}
                     value={houseCocktail.cocktailName}

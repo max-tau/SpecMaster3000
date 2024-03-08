@@ -49,6 +49,10 @@
   margin-bottom: 0.5rem;
 }
 
+.ingredients-container {
+  margin-top: 0.5rem;
+}
+
 .cocktail-card_form_input {
   margin-bottom: 1rem;
   width: 100%;
@@ -66,4 +70,8 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+.placeholder-input_hidden {
+  display: none;
 }
