@@ -1,10 +1,10 @@
 import React from "react";
-import ReviseAndTestCard from "./ReviseAndTestCard";
+import CocktailCard from "./CocktailCard";
 
 const ReviseAndTestModule = ({ selectedCocktails }) => {
   return (
     <div>
-      <ReviseAndTestCard selectedCocktails={selectedCocktails} />
+      <CocktailCard selectedCocktails={selectedCocktails} />
     </div>
   );
 };

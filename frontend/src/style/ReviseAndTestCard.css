@@ -7,8 +7,6 @@
 .cocktail-card {
   width: fit-content;
   color: aliceblue;
-  border: 0.1rem solid aliceblue;
-  border-radius: 0.2rem;
   padding: 0.5rem;
   margin: 1.5rem 1.5rem 1.5rem 1.5rem;
 }

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "../style/ReviseAndTestCard.css";
+import axios from "axios";
 
 const ReviseAndTestCard = ({ selectedCocktails }) => {
+  axios.defaults.baseURL = "http://localhost:3001";
   const [inputs, setInputs] = useState([
     {
       ingredientName: "",
@@ -14,18 +16,27 @@ const ReviseAndTestCard = ({ selectedCocktails }) => {
   );
   const [learnerResponses, setLearnerResponses] = useState([]);
   const fields = {
-    ingredientMeasure: "",
+    cocktailName: "",
     glass: "",
     method: "",
     garnish: "",
   };
   const [formFields, setFormFields] = useState(fields);
   const handleFieldChange = (e) => {
-    setFormFields({
-      ...formFields,
-      ...inputs,
-      [e.target.name]: e.target.value,
-    });
+    if (selectedCocktails) {
+      setFormFields({
+        ...formFields,
+        ...inputs,
+        cocktailName: { currentlySelected },
+        [e.target.name]: e.target.value,
+      });
+    } else {
+      setFormFields({
+        ...formFields,
+        ...inputs,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
   const [showPlaceholder, setShowPlaceholder] = useState();
 
@@ -69,13 +80,55 @@ const ReviseAndTestCard = ({ selectedCocktails }) => {
     selectedCocktails.shift();
     setCurrentlySelected(selectedCocktails[0]);
   };
+  const handleAddCocktail = async (e) => {
+    e.preventDefault();
+    console.log(formFields);
+    await axios
+      .post("/cocktails", {
+        cocktailName: formFields.cocktailName,
+        method: formFields.method,
+        garnish: formFields.garnish,
+        glass: formFields.glass,
+      })
+      .then(console.log("Cocktail added!"))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="cocktail-card-container">
       <div className="cocktail-card">
-        <h2>{currentlySelected}</h2>
-        <img alt="cocktail" src="https://picsum.photos/200/200"></img>
-        <form className="cocktail-card_form" onSubmit={(e) => handleSubmit(e)}>
+        <form
+          className="cocktail-card_form"
+          onSubmit={
+            selectedCocktails.length > 0
+              ? (e) => handleSubmit(e)
+              : (e) => handleAddCocktail(e)
+          }
+        >
+          {selectedCocktails.length > 0 ? (
+            <>
+              <h2>{currentlySelected}</h2>
+              <img alt="cocktail" src="https://picsum.photos/200/200"></img>
+            </>
+          ) : (
+            <>
+              <label
+                className="cocktail-card_form_label"
+                htmlFor="cocktailName"
+              >
+                Cocktail name
+              </label>
+              <input
+                className="cocktail-card_form_input"
+                name="cocktailName"
+                id="cocktailName"
+                type="text"
+                value={formFields.cocktailName}
+                placeholder="Cocktail name"
+                onChange={(e) => handleFieldChange(e)}
+              ></input>
+            </>
+          )}
           <label className="cocktail-card_form_label">
             Ingredients
             <div className="ingredients-container" id="ingredients">
@@ -160,6 +213,7 @@ const ReviseAndTestCard = ({ selectedCocktails }) => {
             <option value="crystal collins">Crystal collins</option>
             <option value="sling">Sling</option>
             <option value="coupette">Coupette</option>
+            <option value="wine">Wine</option>
             <option value="tankard">Tankard</option>
             <option value="trophy">Trophy</option>
             <option value="shooter">Shooter</option>
@@ -188,9 +242,11 @@ const ReviseAndTestCard = ({ selectedCocktails }) => {
           />
           <button type="submit">Submit</button>
         </form>
-        <button className="skip-card_button" onClick={handleSkip}>
-          Skip card
-        </button>
+        {selectedCocktails.length > 0 ? (
+          <button className="skip-card_button" onClick={handleSkip}>
+            Skip card
+          </button>
+        ) : null}
       </div>
     </div>
   );
