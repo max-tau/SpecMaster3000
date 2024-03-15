@@ -1,8 +1,5 @@
 module.exports = (connection, DataTypes) => {
   const schema = {
-    product_id: {
-      type: DataTypes.INTEGER,
-    },
     quantity: {
       type: DataTypes.STRING,
     },

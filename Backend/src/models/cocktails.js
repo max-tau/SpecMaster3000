@@ -20,6 +20,9 @@ module.exports = (connection, DataTypes) => {
       notEmpty: true,
       allowNull: false,
     },
+    // cocktailType: {
+    //   type: DataTypes.STRING,
+    // },
   };
 
   const CocktailModel = connection.define("Cocktails", schema);

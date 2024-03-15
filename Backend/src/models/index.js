@@ -15,7 +15,8 @@ const setupDatabase = () => {
 
   Cocktails.hasMany(Ingredients);
   Ingredients.belongsTo(Cocktails);
-  Ingredients.hasOne(Products, { foreignKey: "id" });
+  Products.hasMany(Ingredients);
+  Ingredients.belongsTo(Products);
 
   connection.sync({ alter: true });
 

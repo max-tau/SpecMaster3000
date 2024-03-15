@@ -1,4 +1,4 @@
-const { Cocktails, Ingredients } = require("../models");
+const { Cocktails, Ingredients, Products } = require("../models");
 
 const {
   createItem,
@@ -12,16 +12,20 @@ exports.createCocktail = (req, res) => createItem(res, "cocktails", req.body);
 
 exports.getAllCocktails = (_, res) => getAllItems(res, "cocktails");
 
-exports.getCocktailById = (req, res) =>
-  getItemById(res, "cocktails", req.params.id);
+// exports.getCocktailById = (req, res) =>
+//   getItemById(res, "cocktails", req.params.id);
 
-// exports.getCocktailById = async (req, res) => {
-//   const selectedCocktail = await Cocktails.findByPk(req.params.id, {
-//     include: { model: Ingredients, where: { CocktailId: req.params.id } },
-//   });
+exports.getCocktailById = async (req, res) => {
+  const selectedCocktail = await Cocktails.findByPk(req.params.id, {
+    include: {
+      model: Ingredients,
+      where: { CocktailId: req.params.id },
+      include: [Products],
+    },
+  });
 
-//   res.status(200).json(selectedCocktail);
-// };
+  res.status(200).json(selectedCocktail);
+};
 
 exports.updateCocktailById = (req, res) =>
   updateItemById(res, "cocktails", req.body, req.params.id);
