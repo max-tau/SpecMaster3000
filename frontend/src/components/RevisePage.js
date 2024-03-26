@@ -12,6 +12,7 @@ const RevisePage = ({ onSetSelectedCocktails, revisionCocktails }) => {
       </h2>
       <div className="revision-favourites_tiles">
         <SectionTile
+          onSetSelectedCocktails={onSetSelectedCocktails}
           title="All House"
           image={
             <img
@@ -22,6 +23,7 @@ const RevisePage = ({ onSetSelectedCocktails, revisionCocktails }) => {
           }
         />
         <SectionTile
+          onSetSelectedCocktails={onSetSelectedCocktails}
           title="All Classics"
           image={
             <img
