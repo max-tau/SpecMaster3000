@@ -7,6 +7,7 @@ const CocktailFilter = ({ onSetSelectedCocktails, revisionCocktails }) => {
   axios.defaults.baseURL = "http://localhost:3001";
 
   const [houseCocktails, setHouseCocktails] = useState([]);
+  const [classicCocktails, setClassicCocktails] = useState([]);
   const [houseAccordionActive, setHouseAccordionActive] = useState(false);
   const [classicAccordionActive, setClassicAccordionActive] = useState(false);
   const [searchState, setSearchState] = useState({ query: "", list: [] });
@@ -67,43 +68,23 @@ const CocktailFilter = ({ onSetSelectedCocktails, revisionCocktails }) => {
     console.log(revisionCocktails);
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get("/cocktails")
-  //     .then(({ data }) => setHouseCocktails(data))
-  //     .catch(() => {
-  //       console.log("no data found");
-  //     }, []);
-  // });
-
   useEffect(() => {
-    setHouseCocktails([
-      {
-        cocktailName: "Sweet Success",
-        method: "Shake and fine strain",
-        garnish: "Rice paper",
-        glass: "Coupette",
-      },
-      {
-        cocktailName: "Lady Luck",
-        method: "Shake and strain",
-        garnish: "Dehydrated lemon",
-        glass: "Catalina",
-      },
-      {
-        cocktailName: "Tankard Ten",
-        method: "Shake, dump and top",
-        garnish: "Dehydrated apple",
-        glass: "Tankard",
-      },
-      {
-        cocktailName: "Matilda's Margarita",
-        method: "Shake and strain",
-        garnish: "Salt rim and dehydrated lime",
-        glass: "Crystal rocks",
-      },
-    ]);
-  }, []);
+    axios
+      .get("/cocktails")
+      .then(({ data }) => {
+        const filteredForHouse = data.filter(
+          (cocktail) => cocktail.category === "House"
+        );
+        setHouseCocktails(filteredForHouse);
+        const filteredForClassic = data.filter(
+          (cocktail) => cocktail.category === "Classic"
+        );
+        setClassicCocktails(filteredForClassic);
+      })
+      .catch(() => {
+        console.log("no data found");
+      }, []);
+  });
 
   return (
     <div className="cocktail-filter">
@@ -182,16 +163,16 @@ const CocktailFilter = ({ onSetSelectedCocktails, revisionCocktails }) => {
           {classicAccordionActive && (
             <div>
               <form className="accordion-content">
-                {houseCocktails.map((houseCocktail) => (
+                {classicCocktails.map((classicCocktail) => (
                   <div className="cocktail-checkbox">
                     <input
                       type="checkbox"
                       id="classicCocktail"
                       name="classicCocktail"
-                      value={houseCocktail.cocktailName}
+                      value={classicCocktail.cocktailName}
                       onChange={onChange}
                     />
-                    {houseCocktail.cocktailName}
+                    {classicCocktail.cocktailName}
                   </div>
                 ))}
                 <button

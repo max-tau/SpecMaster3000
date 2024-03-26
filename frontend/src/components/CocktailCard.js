@@ -20,6 +20,7 @@ const ReviseAndTestCard = ({ selectedCocktails }) => {
     glass: "",
     method: "",
     garnish: "",
+    category: "",
   };
   const [formFields, setFormFields] = useState(fields);
   const handleFieldChange = (e) => {
@@ -37,6 +38,8 @@ const ReviseAndTestCard = ({ selectedCocktails }) => {
         [e.target.name]: e.target.value,
       });
     }
+    // inputs.forEach(async (input) => {await axios.get("/products").then(response => {response.data.filter(product => (product.productName === input.ingredientName))})})
+    // const productId = async () => {axios.get("/products").then(response => {response.data.filter(product => product.productName === )})}
   };
   const [showPlaceholder, setShowPlaceholder] = useState();
 
@@ -89,8 +92,9 @@ const ReviseAndTestCard = ({ selectedCocktails }) => {
         method: formFields.method,
         garnish: formFields.garnish,
         glass: formFields.glass,
+        category: formFields.category,
       })
-      .then(console.log("Cocktail added!"))
+      .then()
       .catch((err) => console.log(err));
   };
 
@@ -127,6 +131,28 @@ const ReviseAndTestCard = ({ selectedCocktails }) => {
                 placeholder="Cocktail name"
                 onChange={(e) => handleFieldChange(e)}
               ></input>
+              <label className="cocktail-card-form_label" htmlFor="categoryt">
+                Category
+              </label>
+              <select
+                className="cocktail-card_form_dropdown"
+                id="category"
+                name="category"
+                value={formFields.category}
+                onChange={(e) => handleFieldChange(e)}
+              >
+                <option
+                  className={
+                    "placeholder-input_" +
+                    (!showPlaceholder ? "hidden" : "visible")
+                  }
+                  value="default"
+                >
+                  Select category
+                </option>
+                <option value="House">House</option>
+                <option value="Classic">Classic</option>
+              </select>
             </>
           )}
           <label className="cocktail-card_form_label">
@@ -144,15 +170,17 @@ const ReviseAndTestCard = ({ selectedCocktails }) => {
                       placeholder="Ingredient name"
                       onChange={(e) => handleChange(e, index)}
                     />
-                    <input
-                      className="ingredient-input"
-                      name="ingredientQuantity"
-                      id="ingredientQuantity"
-                      type="text"
-                      value={ingredientInput.ingredientQuantity}
-                      placeholder="Quantity"
-                      onChange={(e) => handleChange(e, index)}
-                    />
+                    {ingredientInput.ingredientMeasure === "top" ? null : (
+                      <input
+                        className="ingredient-input"
+                        name="ingredientQuantity"
+                        id="ingredientQuantity"
+                        type="text"
+                        value={ingredientInput.ingredientQuantity}
+                        placeholder="Quantity"
+                        onChange={(e) => handleChange(e, index)}
+                      />
+                    )}
                     <select
                       required
                       className="ingredient-input_dropdown"
@@ -209,14 +237,14 @@ const ReviseAndTestCard = ({ selectedCocktails }) => {
             >
               Select glass
             </option>
-            <option value="crystal rocks">Crystal rocks</option>
-            <option value="crystal collins">Crystal collins</option>
-            <option value="sling">Sling</option>
-            <option value="coupette">Coupette</option>
-            <option value="wine">Wine</option>
-            <option value="tankard">Tankard</option>
-            <option value="trophy">Trophy</option>
-            <option value="shooter">Shooter</option>
+            <option value="Crystal rocks">Crystal rocks</option>
+            <option value="Crystal collins">Crystal collins</option>
+            <option value="Sling">Sling</option>
+            <option value="Coupette">Coupette</option>
+            <option value="Wine">Wine</option>
+            <option value="Tankard">Tankard</option>
+            <option value="Trophy">Trophy</option>
+            <option value="Shooter">Shooter</option>
           </select>
           <label className="cocktail-card_form_label" htmlFor="method">
             Method
